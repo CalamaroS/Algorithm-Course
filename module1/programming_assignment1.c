@@ -11,7 +11,7 @@
  * 2718281828459045235360287471352662497757247093699959574966967627
  *
  * [TIP: before submitting, first test the correctness of your program on some small test cases of your own devising. Then post your best test cases to the discussion forums to help your fellow students!]
- * [Food for thought: the number of digits in each input number is a power of 2.  Does this make your life easier?  Does it depend on which algorithm you're implementing?]
+ * [Food for thought: the number of digits in each input number is a _power of 2.  Does this make your life easier?  Does it depend on which algorithm you're implementing?]
  * The numeric answer should be typed in the space below.  So if your answer is 1198233847, then just type 1198233847 in the space provided without any space / commas / any other punctuation marks.
  * (We do not require you to submit your code, so feel free to use any programming language you want --- just type the final numeric answer in the following space.)
  * @version 0.1
@@ -21,72 +21,23 @@
  *
  */
 
-
-#include <stdint.h>
-#include <stddef.h>
-#include <string.h>
+#include <stdio.h>
+#include "assignment1_lib.h"
 
 
-void multiply(karatsuba_string_t*, karatsuba_string_t*, karatsuba_string_t*);
+int main()
+{
+    karatsuba_string_t a, b, r;
 
-void add(karatsuba_string_t*, karatsuba_string_t*, karatsuba_string_t*);
+    get_input(&a);
+    get_input(&b);
 
-int value(karatsuba_string_t*);
+    karatsuba_init(&r);
 
-void multiply(karatsuba_string_t* x, karatsuba_string_t* y, karatsuba_string_t* res){
-    karatsuba_string_t a = {
-        .head = x->head,
-        .digits = x->digits >> 1,
-    };
-    karatsuba_string_t b = {
-        .head = x->head + (x->digits >> 1),
-        .digits = x->digits >> 1,
-    };
-    karatsuba_string_t c = {
-        .head = y->head,
-        .digits = y->digits >> 1,
-    };
-    karatsuba_string_t d = {
-        .head = y->head + (x->digits >> 1),
-        .digits = y->digits >> 1,
-    };
+    //sub(&a, &b, &r);
+    multiply(&a, &b, &r);
+    format(&r);
 
-
-
-
-    if (x->digits == 2 && y->digits == 2){
-        int ac = value(&a) * value(&c) - value(&d) * value(&d)
-    }
-}
-
-
-int main(){
-
-
+    printf("\n\n>> Result: %s\n\n", r.value);
     return 0;
-}
-
-typedef struct karatsuba_string_s{
-    char *head;
-    int digits;
-} karatsuba_string_t;
-
-unsigned int karatsuba_int(unsigned int a, unsigned int b, unsigned int c, unsigned int d){
-    unsigned int ac = a*c;
-    unsigned int bd = b*d;
-    unsigned int step3 = (a+b) * (c+d);
-    return step3 - ac - bd;
-}
-
-char* karatsuba(karatsuba_string_t *a, karatsuba_string_t *b, karatsuba_string_t *c, karatsuba_string_t *d){
-    if (a->size > 1 && c->size > 1){
-        char* ac = karatsuba();
-        char* bd = karatsuba();
-
-        char* step3 = karatsuba();
-        return string_sum()
-    }
-
-
-    return step3 - ac - bd;
 }
