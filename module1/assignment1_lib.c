@@ -49,7 +49,7 @@ void get_input(karatsuba_string_t *s)
 {
     printf("Enter number: ");
     s->value = malloc((MAX_DIGIT_NUMBER + 1) * sizeof(char));
-    scanf("%9s", s->value);
+    scanf("%s", s->value);
     inplace_reverse(s->value);
     s->digits = (int)strlen(s->value);
 }
@@ -69,13 +69,13 @@ long power(int x, unsigned n)
 
 uint32_t value(karatsuba_string_t *s)
 {
-    DPRINT("line %d - value - input %s\n", __LINE__, s->value);
+    //DPRINT("line %d - value - input %s\n", __LINE__, s->value);
     uint32_t val = 0;
     if (s->digits > 31)
         return -1;
     for (int i = 0; i < s->digits; i++){
         val += (s->value[i] - '0') * power(10,i);
-        DPRINT("line %d - value - val = %u\n", __LINE__, val);
+        //DPRINT("line %d - value - val = %u\n", __LINE__, val);
     }
     return val;
 }
@@ -132,15 +132,14 @@ void multiply(karatsuba_string_t *x, karatsuba_string_t *y, karatsuba_string_t *
     add(&a, &b, &a_plus_b);
     add(&c, &d, &c_plus_d);
 
+    DPRINT("line %d - multiply - value(&a) = %d\n", __LINE__, value(&a));
+    DPRINT("line %d - multiply - value(&b) = %d\n", __LINE__, value(&b));
+    DPRINT("line %d - multiply - value(&c) = %d\n", __LINE__, value(&c));
+    DPRINT("line %d - multiply - value(&d) = %d\n", __LINE__, value(&d));
+    DPRINT("line %d - multiply - value(&a_plus_b) = %d\n", __LINE__, value(&a_plus_b));
+    DPRINT("line %d - multiply - value(&c_plus_d) = %d\n", __LINE__, value(&c_plus_d));
     if (n <= 2)
     {
-        DPRINT("line %d - multiply - value(&a) = %d\n", __LINE__, value(&a));
-        DPRINT("line %d - multiply - value(&b) = %d\n", __LINE__, value(&b));
-        DPRINT("line %d - multiply - value(&c) = %d\n", __LINE__, value(&c));
-        DPRINT("line %d - multiply - value(&d) = %d\n", __LINE__, value(&d));
-        DPRINT("line %d - multiply - value(&a_plus_b) = %d\n", __LINE__, value(&a_plus_b));
-        DPRINT("line %d - multiply - value(&c_plus_d) = %d\n", __LINE__, value(&c_plus_d));
-
         string(value(&a) * value(&c), &step1);
         string(value(&b) * value(&d), &step2);
         string(value(&a_plus_b) * value(&c_plus_d), &step3);
@@ -151,6 +150,8 @@ void multiply(karatsuba_string_t *x, karatsuba_string_t *y, karatsuba_string_t *
         multiply(&b, &d, &step2);
         multiply(&a_plus_b, &c_plus_d, &step3);
     }
+
+    DPRINT("line %d - multiply - step3 (%d * %d)= %d\n", __LINE__, value(&c_plus_d), value(&a_plus_b), value(&step3));
 
     sub(&step3, &step2, &step4);
     sub(&step4, &step1, &step4);

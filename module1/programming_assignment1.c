@@ -23,10 +23,15 @@
 
 #include <stdio.h>
 #include "assignment1_lib.h"
+#include "test.h"
 
+#define _TEST_
 
 int main()
 {
+    printf("HELL0\n\n");
+
+#ifndef _TEST_
     karatsuba_string_t a, b, r;
 
     get_input(&a);
@@ -39,5 +44,9 @@ int main()
     format(&r);
 
     printf("\n\n>> Result: %s\n\n", r.value);
+#else
+    printf("HELL0\n\n");
+    run_tests();
+#endif
     return 0;
 }
